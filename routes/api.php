@@ -50,8 +50,6 @@ Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 
 });
 
-//Route::resource('products',ProductController::class);
-
 //Public routes
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class,'register']);
@@ -64,21 +62,6 @@ Route::get('/products/search/{name}/{price}',[ProductController::class,'search']
 Route::get('/products/search_product',[ProductController::class,'search_product']);
 
 Route::get('/products/backend',[ProductController::class,'index']);
-
-//Multi Search  test
-//Route::get('/products/search/{name}/{price}',[ProductController::class,'search']);
-/*
-Route::get('/products/backend/{data}', function(){
-    $data = request();
-    dd($data);
-    //    return App::call('App\Http\Controllers\ProductController@index' , ['data' => $data]);
-});
-*/
-
-//
-//
-
-
 
 
 
