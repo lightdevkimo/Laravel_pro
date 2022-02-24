@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apartement extends Model
 {
+
+    protected $table="apartments";
     use HasFactory;
-    protected $fillable =[
+
+    protected $fillable=[
         'approved',
         'description',
         'address',
@@ -18,6 +21,8 @@ class Apartement extends Model
         'images',
         'available',
         'max',
-        'nearby'
+        'nearby',
+        'owner_id',
+        'city_id'
     ];
 }

@@ -52,6 +52,7 @@ class AuthController extends Controller
 
         $response=[
             'data'=>$user,
+            'role'=>$user->role,
             'token'=>$token
         ];
         return response($response,201);
@@ -59,7 +60,6 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         auth()->user()->tokens()->delete();
-
         return[
             'message'=>'Logged out'
         ];

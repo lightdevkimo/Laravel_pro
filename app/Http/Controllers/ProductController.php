@@ -178,7 +178,5 @@ class ProductController extends Controller
             ];
             return response($response,400);
         }
-
-
     }
 }

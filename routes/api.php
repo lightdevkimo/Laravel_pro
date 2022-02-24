@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminAuth;
-use App\Http\Controllers\API\ApartementController;
+use App\Http\Controllers\ApartementController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,24 +21,21 @@ use App\Http\Controllers\API\ApartementController;
 //Public Routes Of Apartements
 
 //List All Apartements
-Route::get('/apartements/',[ApartementController::class,'index']);
-
-
-//List One Apartement By ID
-Route::get('/apartements/{id}',[ApartementController::class,'show']);
+Route::get('/apartements',[ApartementController::class,'index']);
 
 
 //Global search
-
+//Takes gender or max price or min price
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
 ///Private Routes Of Apartements
+
+Route::post('/apartements/',[ApartementController::class,'store']);
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
 
-    Route::post('/apartements/',[ApartementController::class,'store']);
 
     Route::delete('/apartements/{id}',[ProductController::class,'destroy']);
 
@@ -65,9 +62,10 @@ Route::get('/products/backend',[ProductController::class,'index']);
 
 
 
+Route::post('/products',[ProductController::class,'store']);
+
 // Protected routes
 Route::group(['middleware'=>['auth:sanctum']], function () {
-    Route::post('/products',[ProductController::class,'store']);
     Route::put('/products/{id}',[ProductController::class,'update']);
     Route::delete('/products/{id}',[ProductController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);

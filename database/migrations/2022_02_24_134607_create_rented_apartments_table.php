@@ -20,6 +20,7 @@ class CreateRentedApartmentsTable extends Migration
             $table->unsignedBigInteger('apartment_id');
             $table->foreign('apartment_id')->references('id')->on('apartments');
             $table->string('comments');
+            $table->string('status');
             $table->timestamps();
         });
     }

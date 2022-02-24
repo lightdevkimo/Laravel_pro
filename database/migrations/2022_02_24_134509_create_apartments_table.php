@@ -20,11 +20,11 @@ class CreateApartmentsTable extends Migration
             $table->string('address');
             $table->integer('price');
             $table->string('link')->nullable();
-            $table->enum('gender',['male', 'female']);
+            $table->enum('gender',['male', 'female','mix']);
             $table->integer('available');
             $table->integer('max');
             $table->string('images');
-            $table->text('nearby');
+            $table->text('nearby')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');
             $table->unsignedBigInteger('city_id');
