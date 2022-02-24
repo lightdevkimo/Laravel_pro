@@ -20,7 +20,7 @@ class CreateApartmentsTable extends Migration
             $table->string('address');
             $table->integer('price');
             $table->string('link')->nullable();
-            $table->enum('gender',['male', 'female','mix']);
+            $table->enum('gender',['male', 'female']);
             $table->integer('available');
             $table->integer('max');
             $table->string('images');
