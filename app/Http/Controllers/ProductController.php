@@ -14,6 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+
         //$data= $request->all();
         //return dd($data);
         return Product::all();

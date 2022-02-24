@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Middleware\AdminAuth;
+use App\Http\Controllers\API\ApartementController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,9 +18,37 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+//Public Routes Of Apartements
+
+//List All Apartements
+Route::get('/apartements/',[ApartementController::class,'index']);
 
 
+//List One Apartement By ID
+Route::get('/apartements/{id}',[ApartementController::class,'show']);
 
+
+//Global search
+
+Route::get('/apartement/search',[ApartementController::class,'search']);
+
+///Private Routes Of Apartements
+
+Route::group(['middleware'=>['auth:sanctum']], function () {
+
+    Route::put('/apartements/{id}',[ApartementController::class,'update']);
+
+    Route::post('/apartements/',[ApartementController::class,'store']);
+
+    Route::delete('/apartements/{id}',[ProductController::class,'destroy']);
+
+});
+
+Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
+
+    Route::put('/apartements/{id}',[ApartementController::class,'approve']);
+
+});
 
 //Route::resource('products',ProductController::class);
 
