@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CityRequest;
 use App\Http\Resources\ApartementResource;
 use Illuminate\Http\Request;
 use App\Models\Apartement;
+use App\Models\City;
+
 class ApartementController extends Controller
 {
     /**
@@ -64,4 +67,9 @@ class ApartementController extends Controller
     {
         //
     }
+
+
+
+
+
 }
