@@ -20,11 +20,11 @@ use App\Http\Controllers\RentApartmentController;
 |
 */
 
-Route::get('/rent', [RentApartmentController::class, 'index']);
+/* Route::get('/rent', [RentApartmentController::class, 'index']);
 Route::get('/rent/{id}', [RentApartmentController::class, 'show']);
 Route::post('/rent', [RentApartmentController::class, 'store']);
 Route::delete('/rent/{id}', [RentApartmentController::class, 'destroy']);
-Route::put('/rent/{id}', [RentApartmentController::class, 'edit']);
+Route::put('/rent/{id}', [RentApartmentController::class, 'edit']); */
 
 //Public Routes Of Apartements
 

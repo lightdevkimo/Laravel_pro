@@ -25,4 +25,9 @@ class Apartement extends Model
         'owner_id',
         'city_id'
     ];
+
+    public function rentedApartment()
+    {
+        $this->hasMany(RentApartment::class);
+    }
 }

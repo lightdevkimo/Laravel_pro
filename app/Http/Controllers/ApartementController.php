@@ -6,8 +6,14 @@ use App\Http\Resources\ApartementResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Apartement;
+use App\Models\User;
+
 class ApartementController extends Controller
 {
+    /* public function getRent($user_id)
+    {
+        return User::rentedApartment();
+    } */
     /**
      * Display a listing of the resource.
      *
