@@ -24,7 +24,15 @@ class ApartementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'gender'=>['required'],
+            'max'=>['required'],
+            'images'=>['required'],
+            'nearby'=>['required'],
+            'price'=> ['required'],
+            'address'=> ['required'],
+            'description'=> ['required'],
+            'owner_id'=>['required'],
+            'city_id'=>['required']
         ];
     }
 }

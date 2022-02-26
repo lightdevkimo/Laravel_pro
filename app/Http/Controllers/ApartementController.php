@@ -15,6 +15,7 @@ class ApartementController extends Controller
      */
     public function index()
     {
+
         //return Apartement::all();
         $apartement =Apartement::all();
         return ApartementResource::collection($apartement);
@@ -50,8 +51,19 @@ class ApartementController extends Controller
      */
     public function show($id)
     {
-        $apartement = Apartement::find($id);
-        return new ApartementResource($apartement);
+
+        $apart = Apartement::find($id);
+        if($apart){
+            return new ApartementResource($apart);
+        }
+        else
+        {
+            return response('No Data',404);
+        }
+
+       // return Apartement::where('id', $id)->get();
+        //dd($apart);
+//        return
     }
 
 
@@ -119,7 +131,10 @@ class ApartementController extends Controller
             'address'=> 'required',
             'description'=> 'required'
         ]);
-        return Apartement::create($request->all());
+
+        $apartement = Product::find($id);
+        $apartement->update($request->all());
+        return $apartement;
     }
 
 
