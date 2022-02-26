@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\ApartementController;
+use App\Http\Controllers\RentApartmentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +19,12 @@ use App\Http\Controllers\ApartementController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/rent', [RentApartmentController::class, 'index']);
+Route::get('/rent/{id}', [RentApartmentController::class, 'show']);
+Route::post('/rent', [RentApartmentController::class, 'store']);
+Route::delete('/rent/{id}', [RentApartmentController::class, 'destroy']);
+Route::put('/rent/{id}', [RentApartmentController::class, 'edit']);
 
 //Public Routes Of Apartements
 
