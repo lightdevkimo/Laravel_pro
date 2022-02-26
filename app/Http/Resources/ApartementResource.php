@@ -15,6 +15,7 @@ class ApartementResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'            =>$this->id,
             'approved'      =>$this->approved,
             'description'   =>$this->description,
             'address'       =>$this->address,

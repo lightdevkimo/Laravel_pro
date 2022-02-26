@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -12,13 +13,54 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function city()
+    {
+
+        //$data= $request->all();
+        //return dd($data);
+        $data= City::distinct()->get(['governorate']);
+        //distinct('governorate')->get();
+        $response=[
+            'data'=>$data,
+            'error'=>'test'
+        ];
+        return response($response,200);
+
+
+        //return Product::paginate(4);
+        //return Product::all();
+
+
+    }
+    public function findcity($gov)
+    {
+        $data= City::where('governorate',$gov)->get();
+        $response=[
+            'data'=>$data,
+            'error'=>'test'
+        ];
+        return response($response,200);
+
+
+
+    }
+
+
+
     public function index()
     {
 
         //$data= $request->all();
         //return dd($data);
-        return Product::all();
-       // return Product::paginate(10);
+        $data= Product::all();
+        $response=[
+            'data'=>$data,
+            'error'=>'test'
+        ];
+        return response($response,200);
+
+        //return Product::paginate(4);
+        //return Product::all();
     }
 
     /**
@@ -178,7 +220,5 @@ class ProductController extends Controller
             ];
             return response($response,400);
         }
-
-
     }
 }
