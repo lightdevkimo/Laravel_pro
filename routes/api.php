@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\API\ApartementController;
+use App\Http\Controllers\API\ContactController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,6 +65,11 @@ Route::get('/products/search/{name}/{price}',[ProductController::class,'search']
 Route::get('/products/search_product',[ProductController::class,'search_product']);
 
 Route::get('/products/backend',[ProductController::class,'index']);
+///////////////////////////////////////////////////////////////////
+////////////////////////// contact us  //////////////////
+ Route::get('/contact-us',[ContactController::class,'index']);
+ Route::post('/contact-us/store',[ContactController::class,'store']);
+
 
 //Multi Search  test
 //Route::get('/products/search/{name}/{price}',[ProductController::class,'search']);
