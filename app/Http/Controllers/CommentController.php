@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentApartmentRequest;
 use App\Http\Requests\UpdateCommentApartmentRequest;
 use App\Models\CommentApartment;
+use App\Models\RentApartment;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -13,9 +15,37 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $comments = RentApartment::query();
+        if($request->has('apartment'))
+        {
+            $comments = $comments->where('apartment_id', $request['apartment']);
+        }
+        if($request->has('user'))
+        {
+            $comments = $comments->where('user_id', $request['user']);
+        }
+
+        $comments= $comments->whereNotNull('comments')->get();
+        if ($comments->isNotEmpty()){
+
+            $response=[
+                'data'=>$comments,
+                'error'=>''
+            ];
+
+            return response($response,200);
+        }
+        else
+        {
+            $response=[
+                'error'=>'No comments found.'
+            ];
+
+            return response($response,404);
+        }
+
     }
 
     /**
@@ -34,9 +64,41 @@ class CommentController extends Controller
      * @param  \App\Http\Requests\StoreCommentApartmentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCommentApartmentRequest $request)
+    public function store(Request $request)
     {
-        //
+        $comments = new RentApartment;
+        if($request->has('apartment') && $request->has('user'))
+        {
+            $comments = $comments->where('apartment_id', $request['apartment'])->where('user_id', $request['user'])->where('status', 'confirmed');
+        }
+        else
+        {
+            $response=[
+                'error'=>'Can not add comment from / on anonymous.'
+            ];
+
+            return response($response,402);
+        }
+
+        $comments= $comments->orderBy('created_at','desc')->first();
+        if ($comments){
+            $comments->comments = $request['comment'];
+            $comments->save();
+            $response=[
+                'data'=>'Comment updated successfully!',
+                'error'=>''
+            ];
+
+            return response($response,200);
+        }
+        else
+        {
+            $response=[
+                'error'=>'You can not comment this apartment right now.'
+            ];
+
+            return response($response,404);
+        }
     }
 
     /**

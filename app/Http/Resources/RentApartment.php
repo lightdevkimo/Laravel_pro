@@ -16,6 +16,7 @@ class RentApartment extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            'id' => $this->id,
             'user_id' => $this->user_id,
             'apartment_id' => $this->apartment_id,
             'comments' => $this->comments,
