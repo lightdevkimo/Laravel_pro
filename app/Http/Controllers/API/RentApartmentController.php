@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRentApartmentRequest;
 use App\Http\Requests\UpdateRentApartmentRequest;
 use App\Http\Resources\RentApartment as RentApartmentResources;

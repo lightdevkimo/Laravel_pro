@@ -1,15 +1,9 @@
 <?php
 
-use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\CommentController;
 
-use App\Http\Controllers\RentApartmentController;
-
-/* Route::post('/rent', [RentApartmentController::class, 'store']);
-
-Route::get('/rent',function(){
-    return 'hi';
-}); */
+use App\Http\Controllers\API\RentApartmentController;
 
 Route::get('/rent', [RentApartmentController::class, 'index']);
 Route::get('/rent/{id}', [RentApartmentController::class, 'show']);
