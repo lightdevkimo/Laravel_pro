@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class ApartementRequest extends FormRequest
+class UpdateRentApartmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
