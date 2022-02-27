@@ -16,22 +16,8 @@ class CityController extends Controller
         return CityResource::collection($city);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CityRequest $request)
-    {
 
-
-        $data = $request->all();
-        return   City::create($data);
-
-    }
-
-    /**
+      /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -43,6 +29,25 @@ class CityController extends Controller
         return new CityResource($city);
     }
 
+    
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CityRequest $request)
+    {
+
+
+        $data = $request->all();
+        City::create($data);
+        return response('Apartment stord succesfully',201); 
+
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -52,26 +57,14 @@ class CityController extends Controller
      */
     public function update(CityRequest $request, $id)
     {
+
+     
         $city = City::find($id);
         $city->update($request->all());
-        return $city;
+        return response('Apartment updated succesfully',201); 
     }
 
 
-   /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function approve($id)
-    {
-        //
-    }
-
-
-
-   
 
     /**
      * Remove the specified resource from storage.
@@ -81,56 +74,15 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
+        City::destroy($id);
         
-        return  City::destroy($id);
-        
+        return response('Apartment deleted succesfully',201);        
     }
 
 
 
 
-     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function search(CityRequest $request){
-        //return 'hello';
 
-        if ($request->has('name')){
-
-            if($request->has('governorate'))
-            {
-                $data = City::where('name','like','%'.$request['name'].'%')->where('governorate','like','%'.$request['governorate'].'%')->get();
-                $response=[
-                    'data'=>$data,
-                    'error'=>''
-                ];
-                return response($response,201);
-            }
-            else
-            {
-                $data = City::where('name','like','%'.$request['name'].'%')->get();
-                $response=[
-                    'data'=>$data,
-                    'error'=>''
-                ];
-                return response($response,201);
-            }
-        }
-      
-        else
-        {
-            $response=[
-                'data'=>'',
-                'error'=>'You Missed Search '
-            ];
-            return response($response,400);
-        }
-
-
-    }
 
 
 

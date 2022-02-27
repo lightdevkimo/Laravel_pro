@@ -88,8 +88,6 @@ Route::get('/cities/',[CityController::class,'index']);
 //List One city By ID
 Route::get('/cities/{id}',[CityController::class,'show']);
 
-//Global search
-Route::get('/city/search',[CityController::class,'search']);
 
 ///Private Routes Of cities
 Route::group(['middleware'=>['auth:sanctum']], function () {
@@ -99,12 +97,6 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/cities/',[CityController::class,'store']);
 
     Route::delete('/cities/{id}',[CityController::class,'destroy']);
-
-});
-
-Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
-
-    Route::put('/cities/{id}',[CityController::class,'approve']);
 
 });
 
