@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ApartementResource;
-use App\Models\Product;
+use App\Http\Requests\ApartementRequest;
+use App\Http\Requests\ApartementUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Apartement;
+
 class ApartementController extends Controller
 {
     /**
@@ -15,8 +18,6 @@ class ApartementController extends Controller
      */
     public function index()
     {
-
-        //return Apartement::all();
         $apartement =Apartement::all();
         return ApartementResource::collection($apartement);
     }
@@ -27,19 +28,9 @@ class ApartementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ApartementRequest $request)
     {
-        $request->validate([
-            'gender'=>'required',
-            'max'=>'required',
-            'images'=>'required',
-            'nearby'=>'required',
-            'price'=> 'required',
-            'address'=> 'required',
-            'description'=> 'required',
-            'owner_id'=>'required',
-            'city_id'=>'required'
-        ]);
+        $request->validated();
         return Apartement::create($request->all());
     }
 
@@ -51,19 +42,14 @@ class ApartementController extends Controller
      */
     public function show($id)
     {
-
-        $apart = Apartement::find($id);
-        if($apart){
-            return new ApartementResource($apart);
+        $apartement = Apartement::find($id);
+        if($apartement){
+            return new ApartementResource($apartement);
         }
         else
         {
             return response('No Data',404);
         }
-
-       // return Apartement::where('id', $id)->get();
-        //dd($apart);
-//        return
     }
 
 
@@ -109,7 +95,6 @@ class ApartementController extends Controller
             return response($response,404);
         }
 
-
     }
 
 
@@ -120,23 +105,33 @@ class ApartementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ApartementUpdateRequest $request, $id)
     {
-        $request->validate([
-            'gender'=>'required',
-            'max'=>'required',
-            'images'=>'required',
-            'nearby'=>'required',
-            'price'=> 'required',
-            'address'=> 'required',
-            'description'=> 'required'
-        ]);
-
-        $apartement = Product::find($id);
+        $request->validated();
+        $apartement = Apartement::find($id);
         $apartement->update($request->all());
-        return $apartement;
+        $response=[
+            'message'=>'Data Update Successfully',
+            'error'=>''
+        ];
+
+        return response($response,200);
     }
 
+    public function approve($id){
+
+        $apartement = Apartement::find($id);
+
+        $apartement->update(['approved','1']);
+
+        $response=[
+            'message'=>'Apartement Approved Successfully',
+            'error'=>''
+        ];
+
+        return response($response,200);
+
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -146,6 +141,11 @@ class ApartementController extends Controller
      */
     public function destroy($id)
     {
-        return Apartement::destroy($id);
+        Apartement::destroy($id);
+        $response=[
+            'message'=>'Date Deleted Successfully',
+            'error'=>''
+        ];
+        return response($response,200);
     }
 }

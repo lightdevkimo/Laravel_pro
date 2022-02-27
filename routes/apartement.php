@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Middleware\AdminAuth;
-use App\Http\Controllers\ApartementController;
+use App\Http\Controllers\API\ApartementController;
 
 
 //Public Routes Of Apartements
@@ -22,16 +19,17 @@ Route::get('/apartements/{id}',[ApartementController::class,'show']);
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
 ///Private Routes Of Apartements
-
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
-    Route::post('/apartements/',[ApartementController::class,'store']);
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
-    Route::delete('/apartements/{id}',[ProductController::class,'destroy']);
+    Route::post('/apartements',[ApartementController::class,'store']);
+    Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
 
 });
 
 ///Admin Routes Only
 Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
-    Route::put('/apartements/{id}',[ApartementController::class,'approve']);
+
+    Route::put('/apartements/approve/{id}',[ApartementController::class,'approve']);
+    
 });

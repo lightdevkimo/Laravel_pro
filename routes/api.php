@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\API\ContactController;
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +15,11 @@ use App\Http\Controllers\API\ContactController;
 |
 */
 
-
 //Public routes
-Route::post('/login',[AuthController::class,'login']);
+
 Route::post('/register',[AuthController::class,'register']);
+
+Route::post('/login',[AuthController::class,'login']);
 
 
 
