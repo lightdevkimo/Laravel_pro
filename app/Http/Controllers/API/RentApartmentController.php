@@ -42,65 +42,40 @@ class RentApartmentController extends Controller
     public function store(StoreRentApartmentRequest $request)
     {
         $request->validated();
-        // 
+        //
         $user_gender = User::where('id', $request['user_id'])->first()['gender'];
 
         $apartment = Apartement::where('id', $request['apartment_id'])->first();
 
-        if ($user_gender !== $apartment['gender']) 
-        {
+        if ($user_gender !== $apartment['gender']) {
 
             return response([
                 'data' => 'your gender is not match with requested apartment'
             ], 402);
         }
-        if ($apartment['available'] < 1) 
-            {
+        if ($apartment['available'] < 1) {
             return response([
                 'data' => 'this apartment is full'
             ], 200);
         }
-        // 
+        //
         $isExist = RentApartment::where('user_id', '=', $request['user_id'])->where('apartment_id', '=', $request['apartment_id'])->get();
-        // ->where('status', 'requested')
+
         if ($isExist->where('status', 'requested')->first()) {
 
             return response([
                 'error' => 'this user already request this apartment'
             ], 402);
         }
-        /* else if ($isExist->where('status', 'confirmed')->first()) {
 
-            return response([
-                'error' => 'you must leave first, then request'
-            ], 402);
-        } */
 
         RentApartment::create($request->all());
-        /* Apartement::where('id', $request['apartment_id'])
-            ->decrement('available'); */
         return response([
             'data' => 'your request successfully done'
         ], 200);
     }
 
-    /* public function delete(StoreRentApartmentRequest $request)
-    {
-        $request->validated();
-        $isExist = RentApartment::where('user_id', '=', $request['user_id'])->where('apartment_id', '=', $request['apartment_id'])->first();
-        if ($isExist) {
 
-            $isExist->delete();
-            Apartement::where('id', $request['apartment_id'])
-                ->increment('available');
-            return response([
-                'data' => 'withdrawing your request successfully'
-            ], 200);
-        }
-        return response([
-            'error' => 'this user did not rent this apartment'
-        ], 402);
-    } */
 
     /**
      * Display the specified resource.
@@ -114,9 +89,7 @@ class RentApartmentController extends Controller
     ) {
         // $request->validated();
         $isExist = RentApartment::find($rent_id);
-        /* $isExist = RentApartment::where('user_id', '=', $request['user_id'])->where('apartment_id', '=', $request['apartment_id'])->first(); */
         if ($isExist) {
-
             return response([
                 'data' => $isExist
             ], 200);
@@ -134,10 +107,7 @@ class RentApartmentController extends Controller
      */
     public function edit($rent_id)
     {
-        // $request->validated();
         $isExist = RentApartment::find($rent_id);
-        // return $isExist;
-        /* $isExist = RentApartment::where('user_id', '=', $request['user_id'])->where('apartment_id', '=', $request['apartment_id'])->first(); */
         if ($isExist) {
             // $isExist->update('status', 'confirmed');
             $isExist->status = 'confirmed';
@@ -177,8 +147,6 @@ class RentApartmentController extends Controller
         if ($isExist) {
             if ($isExist['status'] === 'requested') {
                 RentApartment::destroy($rent_id);
-                // Apartement::where('id', $isExist['apartment_id'])
-                //     ->increment('available');
                 return response([
                     'data' => 'withdrawing / rejecting the request successfully'
                 ], 200);

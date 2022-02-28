@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactusRequest;
+use App\Http\Resources\ContactResource;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -24,10 +27,9 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactusRequest $request)
     {
-        $contact=Contact::save();
-        return ContactResource::collection($contact);
-
+        $request->validated();
+        return Contact::create($request->all());
     }
 }
