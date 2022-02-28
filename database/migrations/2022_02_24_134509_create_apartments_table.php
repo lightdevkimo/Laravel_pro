@@ -23,7 +23,7 @@ class CreateApartmentsTable extends Migration
             $table->enum('gender',['male', 'female']);
             $table->integer('available');
             $table->integer('max');
-            $table->string('images');
+            $table->text('images');
             $table->text('nearby')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');

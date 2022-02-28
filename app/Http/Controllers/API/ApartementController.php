@@ -31,6 +31,28 @@ class ApartementController extends Controller
     public function store(ApartementRequest $request)
     {
         $request->validated();
+
+        if ($request->hasFile('images')) {
+            //dd('image');
+            $completeFileName = $request->file('images')->getClientOriginalName();
+            //dd($completeFileName);
+
+            $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+            //dd($fileNameOnly);
+
+            $extenshion = $request->file('images')->getClientOriginalExtension();
+            //dd($extenshion);
+
+            $compPic = str_replace('', '_', $fileNameOnly . '-' . rand() . '_' . time() . '.' . $extenshion);
+            //dd($compPic);
+
+            $path = $request->file('images')->storeAs('public/images', $compPic);
+            //
+            //dd($path);
+            $request['images']->images = $path;
+        }
+
+
         return Apartement::create($request->all());
     }
 

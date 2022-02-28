@@ -18,11 +18,13 @@ Route::get('/apartements/{id}',[ApartementController::class,'show']);
 //Takes gender or max price or min price
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
+
+Route::post('/apartements',[ApartementController::class,'store']);
+
 ///Private Routes Of Apartements
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
-    Route::post('/apartements',[ApartementController::class,'store']);
     Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
 
 });
@@ -31,5 +33,5 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
 Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 
     Route::put('/apartements/approve/{id}',[ApartementController::class,'approve']);
-    
+
 });

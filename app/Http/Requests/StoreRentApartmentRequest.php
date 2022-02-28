@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class ApartementUpdateRequest extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreRentApartmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +25,10 @@ class ApartementUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'gender'=>'string',
-            'max'=>'integer',
-            'images'=>'string',
-            'nearby'=>'string',
-            'price'=>'integer',
-            'address'=>'string',
-            'description'=>'string',
-            'owner_id'=>'integer',
-            'city_id'=>'integer'
+            
+            'user_id' => 'required|exists:users,id',
+            'apartment_id' => 'required|exists:apartments,id',
+            
         ];
     }
     public function withValidator(Validator $validator)

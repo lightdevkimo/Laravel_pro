@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\API\ContactController;
 /*
@@ -29,7 +28,7 @@ Route::post('/login',[AuthController::class,'login']);
 /////////////////////////////////////////////////////////
 
 Route::get('/contact-us',[ContactController::class,'index']);
-Route::post('/contact-us/store',[ContactController::class,'store']);
+Route::post('/contact-us',[ContactController::class,'store']);
 
 
 
@@ -39,6 +38,8 @@ Route::post('/contact-us/store',[ContactController::class,'store']);
 
 //////////////////////////////////////////////////////////////
 //Tests
+//use App\Http\Controllers\ProductController;
+/*
 Route::get('/products',[ProductController::class,'index']);
 Route::get('/product/{id}',[ProductController::class,'show']);
 Route::get('/products/search_product',[ProductController::class,'search_product']);
@@ -49,5 +50,6 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::delete('/products/{id}',[ProductController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);
 });
+*/
 
 
