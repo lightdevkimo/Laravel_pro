@@ -92,7 +92,7 @@ Route::get('/cities/{id}',[CityController::class,'show']);
 ///Private Routes Of cities
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
-    Route::put('/cities/{id}',[CityController::class,'update']);
+    Route::post('/cities/{id}',[CityController::class,'update']);
 
     Route::post('/cities/',[CityController::class,'store']);
 

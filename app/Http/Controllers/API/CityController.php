@@ -17,12 +17,7 @@ class CityController extends Controller
     }
 
 
-      /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show($id)
     {
         $city = City::find($id);
@@ -30,53 +25,46 @@ class CityController extends Controller
     }
 
     
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CityRequest $request)
+    public function store(CityRequest $request )
     {
-
-
-        $data = $request->all();
-        City::create($data);
-        return response('Apartment stord succesfully',201); 
-
+        $request->validated();
+        City::create($request->all());
+        $response=[
+            'message'=>'City Updated Successfully',
+            'error'=>''
+        ];
+        return response($response,200);
+       
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CityRequest $request, $id)
-    {
 
-     
+    public function update(CityRequest $request, $id)
+
+    {   
+        
+        $request->validated();
         $city = City::find($id);
         $city->update($request->all());
-        return response('Apartment updated succesfully',201); 
+        $response=[
+            'message'=>'City Updated Successfully',
+            'error'=>''
+        ];
+        return response($response,200);
+
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         City::destroy($id);
         
-        return response('Apartment deleted succesfully',201);        
+        $response=[
+            'message'=>'City Deleted Successfully',
+            'error'=>''
+        ];
+
+        return response($response,200);;        
     }
 
 
