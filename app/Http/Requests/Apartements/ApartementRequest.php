@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 use Illuminate\Contracts\Validation\Validator;
 
-class RegisterRequest extends FormRequest
+class ApartementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,16 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-                'name' => 'required|string',
-                'email' => 'required|string|unique:users,email',
-                'password' => 'required|string|confirmed',
-                'gender' => 'required'
+            'gender'=>'required|string',
+            'max'=>'required|integer',
+            'nearby'=>'required|string',
+            'price'=>'required|integer',
+            'address'=>'required|string',
+            'description'=>'required|string',
+            'owner_id'=>'required',
+            'city_id'=>'required'
         ];
     }
     public function withValidator(Validator $validator)
