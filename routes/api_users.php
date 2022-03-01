@@ -1,7 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: karim nfady
- * Date: 2/28/2022
- * Time: 9:23 PM
- */
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\ApartementController;
+
+
+Route::get('/apart/{id}', [UserController::class, 'getApartement']);
+Route::get('/owner/{id}', [ApartementController::class, 'getOwner']);
+
+
+
+Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
+    Route::delete('/user/{id}', [UserController::class, 'destroy']);
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::get('/user/update_password', [UserController::class, 'update_password']);
+
+
+});

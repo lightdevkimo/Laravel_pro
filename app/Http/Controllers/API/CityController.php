@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CityRequest;
+use App\Http\Requests\Cities\CityRequest;
 use App\Http\Resources\CityResource;
+use App\Models\Apartement;
 use App\Models\City;
 use Illuminate\Http\Request;
 
@@ -40,8 +41,6 @@ class CityController extends Controller
     public function store(CityRequest $request)
     {
         $request->validated();
-        //$data = $request->all();
-         //City::create($data);
         City::create($request->all());
         $response=[
             'massage'=>'City Stored succesfully',
@@ -104,7 +103,11 @@ class CityController extends Controller
     }
 
 
-
+    public function CityOfApartement($id)
+    {
+        $cities = Apartement::find($id)->city;
+        return $cities;
+    }
 
 
 

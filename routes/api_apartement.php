@@ -35,3 +35,7 @@ Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
     Route::put('/apartements/approve/{id}',[ApartementController::class,'approve']);
 
 });
+
+//List The City Of Apartement
+
+Route::get('/apartement/city/{id}',[ApartementController::class,'ApartementOfCity']);

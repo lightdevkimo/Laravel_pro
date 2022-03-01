@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRentApartmentRequest;
-use App\Http\Requests\UpdateRentApartmentRequest;
+use App\Http\Requests\RentedApartments\StoreRentApartmentRequest;
+use App\Http\Requests\RentedApartments\UpdateRentApartmentRequest;
 use App\Http\Resources\RentApartment as RentApartmentResources;
 use App\Models\Apartement;
 use App\Models\RentApartment;
@@ -18,11 +18,64 @@ class RentApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rent = RentApartment::all();
-        return RentApartmentResources::collection($rent);
+        $rent = RentApartment::query();
+
+        if($request->has('owner'))
+        {
+            $rent =  User::find($request['owner'])->rentedApartment;
+
+            if($rent->isNotEmpty())
+            {
+                return response([
+                    'data' => $rent
+                ], 200);
+            }
+            else
+            {
+                return response([
+                    'error' => 'this owner does not have any rented apartments'
+                ], 404);
+            }
+        }
+
+        if($request->has('user'))
+        {
+            $rent = $rent->get()->where('user_id',$request['user']);
+            if($rent->isNotEmpty())
+            {
+                return response([
+                    'data' => $rent
+                ], 200);
+            }
+            else
+            {
+                return response([
+                    'error' => 'This User Does not have any request'
+                ], 404);
+            }
+        }
+
+        $rent = $rent->get();
+
+        if($rent->isNotEmpty())
+        {
+            return response([
+                'data' => $rent
+            ], 200);
+        }
+        else
+        {
+            $rent = RentApartment::all();
+            return response([
+                'data' => $rent
+            ], 200);
+        }
+
+        //return RentApartmentResources::collection($rent);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -160,4 +213,7 @@ class RentApartmentController extends Controller
             'error' => 'this rent is not found'
         ], 402);
     }
+
+
+
 }

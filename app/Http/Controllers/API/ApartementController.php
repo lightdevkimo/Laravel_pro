@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Resources\ApartementResource;
-use App\Http\Requests\ApartementRequest;
-use App\Http\Requests\ApartementUpdateRequest;
+
+use App\Http\Requests\Apartements\ApartementRequest;
+use App\Http\Requests\Apartements\ApartementUpdateRequest;
+
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Models\Apartement;
+use App\Models\User;
+
 
 class ApartementController extends Controller
 {
@@ -28,6 +34,8 @@ class ApartementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(ApartementRequest $request)
     {
         $request->validated();
@@ -46,11 +54,15 @@ class ApartementController extends Controller
             $compPic = str_replace('', '_', $fileNameOnly . '-' . rand() . '_' . time() . '.' . $extenshion);
             //dd($compPic);
 
+
+            $request['link']=$compPic;
+
+
             $path = $request->file('images')->storeAs('public/images', $compPic);
-            //
-            //dd($path);
-            $request['images']->images = $path;
+
+            $request['images']->image = $compPic;
         }
+
 
 
         return Apartement::create($request->all());
@@ -70,7 +82,10 @@ class ApartementController extends Controller
         }
         else
         {
-            return response('No Data',404);
+            $response=[
+                'error'=>'Apartement Not Found'
+            ];
+            return response($response,404);
         }
     }
 
@@ -170,4 +185,18 @@ class ApartementController extends Controller
         ];
         return response($response,200);
     }
+
+    public function getOwner($id){
+
+        $apartements = Apartement::find($id)->users;
+        return $apartements;
+    }
+
+    public function ApartementOfCity($id){
+
+        $apartements = City::find($id)->apartments;
+        return $apartements;
+    }
+
+
 }

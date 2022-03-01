@@ -13,4 +13,9 @@ class City extends Model
         'name',
         'governorate'
     ];
+
+    public function apartments()
+    {
+        return $this->hasMany(Apartement::class,'city_id');
+    }
 }
