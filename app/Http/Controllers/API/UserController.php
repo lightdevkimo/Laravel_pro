@@ -33,12 +33,7 @@ class UserController extends Controller
     {
         $request->validated();
         User::create($request->all());
-        $response=[
-            'massage'=>'User Stored Succesfully',
-            'error'=>''
-        ];
-        return response($response,201);
-
+        return(response()->json(['message' => 'User Stored Succesfully'], 201));
     }
 
     /**
@@ -55,10 +50,7 @@ class UserController extends Controller
         }
         else
         {
-            $response=[
-                'error'=>'User Not Found'
-            ];
-            return response($response,404);
+            return(response()->json(['errors' => 'User Not Found'], 404));
         }
     }
 
@@ -82,7 +74,6 @@ class UserController extends Controller
         $user->update();
         $response=[
             'message'=>'Data Update Successfully',
-            'error'=>''
         ];
 
         return response($response,200);
@@ -97,17 +88,26 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        $response=[
-            'message'=>'User Deleted Successfully',
-            'error'=>''
-        ];
-        return response($response,200);
+        return(response()->json(['message' => 'User Deleted Successfully'], 200));
+
     }
 
     public function getApartement($id){
 
         $apartements = User::find($id)->apartments;
-        return $apartements;
+        if ($apartements->isNotEmpty)
+        {
+            $response=[
+                'data'=>$apartements
+            ];
+
+            return response($response,200);
+
+        }
+        else
+        {
+            return(response()->json(['errors' => 'User Donot Own Any Apartement'], 404));
+        }
     }
 
 
