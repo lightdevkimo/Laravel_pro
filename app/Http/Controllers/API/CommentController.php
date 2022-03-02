@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCommentApartmentRequest;
-use App\Http\Requests\UpdateCommentApartmentRequest;
+use App\Http\Requests\Comments\StoreCommentApartmentRequest;
+use App\Http\Requests\Comments\UpdateCommentApartmentRequest;
 use App\Models\CommentApartment;
 use App\Models\RentApartment;
 use Illuminate\Http\Request;

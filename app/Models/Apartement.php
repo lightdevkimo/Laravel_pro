@@ -25,4 +25,14 @@ class Apartement extends Model
         'owner_id',
         'city_id'
     ];
+
+    public function users(){
+
+        return $this->belongsTo(User::class,'owner_id');
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class,'city_id');
+    }
+
 }

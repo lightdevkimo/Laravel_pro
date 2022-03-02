@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,16 +22,35 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
             $request->validated();
+            $salt='';
             $user = new User();
             $user->name = $request['name'];
             $user->email = $request['email'];
+            $user->role = $request['role'];
             $user->password = bcrypt($request['password']);
             $user->gender = $request['gender'];
             $user->save();
             $token = $user->createToken(time())->plainTextToken;
+
+
+            if ($request['role']==1)
+            {
+                $salt.='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoZWxsbyI6ImhlbGxvIn0.mzFAbbzRu-Oada93Er2zZj2eDdTcDpe1vLeRLAGCCPc';
+
+            }
+            elseif($request['role']==2)
+            {
+                $salt.='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJieWVieWUiOiJieWVieWUifQ.EO2FQLVSrgS74bZHch0kxu-HzUK56osW8BdT7WShyoU';
+
+            }
+
+
+
             $response = [
-                'user' => $user,
-                'token' => $token
+                'data'  =>$user,
+                'role'  =>$user->role,
+                'token' =>$token,
+                'salt' =>$salt
             ];
             return response($response, 201);
     }
@@ -43,19 +62,37 @@ class AuthController extends Controller
         //Check email
         $user = User::where('email', $request['email'])->first();
 
+
         //Check Password
         if (!$user || !Hash::check($request['password'], $user->password)) {
-            return response([
-                'message' => 'Bad Creds'
-            ], 401);
+
+            return(response()->json(['errors' => 'Bad Credentials'], 401));
+
         }
 
         $token = $user->createToken(time())->plainTextToken;
 
+        if ($user->role === 0)
+        {
+            $salt='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYWJsbGxsIjoiaGhoaGgifQ.YW5xOWv0c2kyAY_GU1M5XZmJehS5wOZcehZg2KIHs-A';
+        }
+        elseif ($user->role === 1)
+        {
+            $salt='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoZWxsbyI6ImhlbGxvIn0.mzFAbbzRu-Oada93Er2zZj2eDdTcDpe1vLeRLAGCCPc';
+
+        }
+        elseif($user->role === 2)
+        {
+            $salt='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJieWVieWUiOiJieWVieWUifQ.EO2FQLVSrgS74bZHch0kxu-HzUK56osW8BdT7WShyoU';
+
+        }
+
+
         $response = [
             'data' => $user,
             'role' => $user->role,
-            'token' => $token
+            'token' => $token,
+            'salt'=>$salt
         ];
 
         return response($response, 201);
@@ -64,8 +101,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
-        return [
-            'message' => 'Logged out'
-        ];
+        return(response()->json(['errors' => 'Logged out'], 200));
+
     }
 }

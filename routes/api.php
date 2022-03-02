@@ -14,13 +14,14 @@ use App\Http\Controllers\API\ContactController;
 |
 */
 
-//Public routes
+
+/////////////////////////////////////////////////////////
+///////////////////////// Auth Routes  //////////////////
+/////////////////////////////////////////////////////////
 
 Route::post('/register',[AuthController::class,'register']);
 
 Route::post('/login',[AuthController::class,'login']);
-
-
 
 
 /////////////////////////////////////////////////////////
@@ -33,23 +34,5 @@ Route::post('/contact-us',[ContactController::class,'store']);
 
 
 
-
-
-
-//////////////////////////////////////////////////////////////
-//Tests
-//use App\Http\Controllers\ProductController;
-/*
-Route::get('/products',[ProductController::class,'index']);
-Route::get('/product/{id}',[ProductController::class,'show']);
-Route::get('/products/search_product',[ProductController::class,'search_product']);
-Route::post('/products',[ProductController::class,'store']);
-// Protected routes
-Route::group(['middleware'=>['auth:sanctum']], function () {
-    Route::put('/products/{id}',[ProductController::class,'update']);
-    Route::delete('/products/{id}',[ProductController::class,'destroy']);
-    Route::post('/logout',[AuthController::class,'logout']);
-});
-*/
 
 

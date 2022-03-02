@@ -26,3 +26,7 @@ Route::get('/findcities/{gov}', [CityController::class, 'findcity']);
 
 //List All cities
 Route::get('/cities', [CityController::class, 'index']);
+
+//list All Apartement In This City
+
+Route::get('/city/apartement/{id}', [CityController::class, 'CityOfApartement']);

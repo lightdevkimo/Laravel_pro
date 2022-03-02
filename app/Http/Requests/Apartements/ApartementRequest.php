@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Apartements;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -24,10 +24,10 @@ class ApartementRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'gender'=>'required|string',
             'max'=>'required|integer',
+            'available'=>'required|integer',
             'nearby'=>'required|string',
             'price'=>'required|integer',
             'address'=>'required|string',

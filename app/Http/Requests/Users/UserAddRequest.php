@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Cities;
+namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class CityRequest extends FormRequest
+class UserAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,14 @@ class CityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>'required|string',
-            'governorate' =>'required|string'
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email',
+            'password' => 'required|string|confirmed',
+            'gender' => 'required',
+            'role'=>'integer|required'
         ];
     }
+
     public function withValidator(Validator $validator)
     {
         if ($validator->fails()) {
