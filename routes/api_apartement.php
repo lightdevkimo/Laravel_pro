@@ -7,12 +7,13 @@ use App\Http\Controllers\API\UserController;
 Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/apartements',[ApartementController::class,'index']);
+
 
 });
 //Public Routes Of Apartements
 
 //List All Apartements
-Route::get('/apartements',[ApartementController::class,'index']);
 
 //List All One Apartement
 
