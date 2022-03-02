@@ -18,7 +18,7 @@ class CreateApartmentsTable extends Migration
             $table->string('description');
             $table->boolean('approved')->default(0);
             $table->string('address');
-            $table->string('phone');
+            //$table->string('phone');
             $table->integer('price');
             $table->string('link')->nullable();
             $table->enum('gender',['male', 'female']);

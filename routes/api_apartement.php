@@ -2,8 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApartementController;
+use App\Http\Controllers\API\UserController;
 
+Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 
+    Route::get('/users', [UserController::class, 'index']);
+
+});
 //Public Routes Of Apartements
 
 //List All Apartements
@@ -19,11 +24,11 @@ Route::get('/apartements/{id}',[ApartementController::class,'show']);
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
 
-Route::post('/apartements',[ApartementController::class,'store']);
 
 ///Private Routes Of Apartements
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
+    Route::post('/apartements',[ApartementController::class,'store']);
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
     Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
 
