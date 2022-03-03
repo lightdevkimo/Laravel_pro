@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ChangePasswordRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,7 +46,6 @@ class AuthController extends Controller
                 $salt.='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJieWVieWUiOiJieWVieWUifQ.EO2FQLVSrgS74bZHch0kxu-HzUK56osW8BdT7WShyoU';
 
             }
-
 
 
             $response = [
@@ -96,6 +98,28 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function changepassword(ChangePasswordRequest $request)
+    {
+        $request->validated();
+
+        $user = User::where('email', $request['email'])->first();
+
+        if (!$user || !Hash::check($request['old_password'], $user->password)) {
+            return(response()->json(['errors' => 'Enter Your Right Password'], 401));
+        }
+
+        $user->password = bcrypt($request['password']);
+        $user->update();
+
+        $response = [
+            'data' => $user,
+        ];
+
+        return response($response, 201);
+
+
     }
 
     public function logout(Request $request)

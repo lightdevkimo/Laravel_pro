@@ -11,6 +11,11 @@ Route::get('/owner/{id}', [ApartementController::class, 'getOwner']);
 
 
 
+Route::group(['middleware'=>['auth:sanctum']], function () {
+
+    Route::post('/user/changepassword', [AuthController::class, 'changepassword']);
+
+});
 Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 
     Route::get('/users', [UserController::class, 'index']);
@@ -18,7 +23,6 @@ Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
     Route::get('/user/{id}', [UserController::class, 'show']);
-    Route::get('/user/update_password', [UserController::class, 'update_password']);
 
 
 });

@@ -15,30 +15,53 @@ use App\Models\User;
 class StatisticsController extends Controller
 {
 
+    public function count_total_users()
+    {
+        $total_users = User::all()->count();
+        $response=['data'=>$total_users];
+        return response($response,200);
+    }
 
     public function count_admins()
     {
-        return User::where('role', 0)->count();
+        $count_admins = User::where('role', 0)->count();
+        $response=['data'=>$count_admins];
+        return response($response,200);
     }
 
     public function count_users()
     {
-        return User::where('role', 1)->count();
+        $count_users= User::where('role', 1)->count();
+        $response=['data'=>$count_users];
+        return response($response,200);
     }
 
     public function count_owners()
     {
-        return User::where('role', 2)->count();
+        $count_owners = User::where('role', 2)->count();
+        $response=['data'=>$count_owners];
+        return response($response,200);
 
     }
 
     public function count_approved_apartements()
     {
-        return Apartement::where('approved', 1)->count();
+        $count_approved_apartements = Apartement::where('approved', 1)->count();
+        $response=['data'=>$count_approved_apartements];
+        return response($response,200);
     }
 
     public function count_requested_apartements()
     {
-        return Apartement::where('approved', 0)->count();
+        $count_requested_apartements= Apartement::where('approved', 0)->count();
+        $response=['data'=>$count_requested_apartements];
+        return response($response,200);
+    }
+
+    public function count_messages()
+    {
+        $count_messages= Contact::all()->count();
+        $response=['data'=>$count_messages];
+        return response($response,200);
     }
 }

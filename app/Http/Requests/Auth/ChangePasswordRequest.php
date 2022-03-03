@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Apartements;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class ApartementRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,11 @@ class ApartementRequest extends FormRequest
     public function rules()
     {
         return [
-            'gender'=>'required|string',
-            'max'=>'required|integer',
-            'images'=>'required',
-            'available'=>'required|integer',
-            'nearby'=>'required|string',
-            'price'=>'required|integer',
-            'address'=>'required|string',
-            'description'=>'required|string',
-            'owner_id'=>'required',
-            'city_id'=>'required'
+            'old_password' => 'required|string',
+            'password' => 'required|string|confirmed',
         ];
     }
+
     public function withValidator(Validator $validator)
     {
         if ($validator->fails()) {

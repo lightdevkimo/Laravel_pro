@@ -18,7 +18,7 @@ class CreateApartmentsTable extends Migration
             $table->string('description');
             $table->boolean('approved')->default(0);
             $table->string('address');
-            $table->string('phone');
+            //$table->string('phone');
             $table->integer('price');
             $table->string('link')->nullable();
             $table->enum('gender',['male', 'female']);
@@ -27,7 +27,7 @@ class CreateApartmentsTable extends Migration
             $table->text('images');
             $table->text('nearby')->nullable();
             $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('city_id');
             $table->foreign('city_id')->references('id')->on('cities');
             $table->timestamps();

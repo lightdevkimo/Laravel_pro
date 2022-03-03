@@ -14,6 +14,7 @@ class CityController extends Controller
     public function index()
     {
         $city =City::all();
+        //dd($city);
         return CityResource::collection($city);
     }
 
@@ -83,6 +84,7 @@ class CityController extends Controller
 
     public function governorate()
     {
+
         $data= City::distinct()->get(['governorate']);
         $response=[
             'data'=>$data,
