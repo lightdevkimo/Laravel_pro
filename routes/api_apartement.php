@@ -2,35 +2,28 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApartementController;
-use App\Http\Controllers\API\UserController;
-
-Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
-
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/apartements',[ApartementController::class,'index']);
 
 
-});
+
 //Public Routes Of Apartements
 
-//List All Apartements
 
-//List All One Apartement
-
-Route::get('/apartements/{id}',[ApartementController::class,'show']);
 
 //Global search
 
 //Takes gender or max price or min price
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
+//List All One Apartement
+Route::get('/apartements/{id}',[ApartementController::class,'show']);
+
 
 
 ///Private Routes Of Apartements
-Route::group(['middleware'=>['auth:sanctum']], function () {
-
-    Route::post('/apartements',[ApartementController::class,'store']);
+Route::group(['middleware'=>['auth:sanctum','vender_auth']], function () {
+    Route::get('/apartements',[ApartementController::class,'index']);
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
+    Route::post('/apartements',[ApartementController::class,'store']);
     Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
 
 });

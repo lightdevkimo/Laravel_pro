@@ -27,6 +27,7 @@ class ApartementRequest extends FormRequest
         return [
             'gender'=>'required|string',
             'max'=>'required|integer',
+            'images'=>'required',
             'available'=>'required|integer',
             'nearby'=>'required|string',
             'price'=>'required|integer',

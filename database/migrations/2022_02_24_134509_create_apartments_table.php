@@ -27,7 +27,7 @@ class CreateApartmentsTable extends Migration
             $table->text('images');
             $table->text('nearby')->nullable();
             $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('city_id');
             $table->foreign('city_id')->references('id')->on('cities');
             $table->timestamps();

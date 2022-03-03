@@ -100,6 +100,7 @@ class ApartementController extends Controller
             $apartement = $apartement->where('gender', $request['gender']);
         }
 
+
         if ($request->has('max_price') && $request->has('min_price')) {
 
             $apartement = $apartement->whereBetween('price', [$request['min_price'], $request['max_price']]);
