@@ -22,13 +22,10 @@ class RentApartmentController extends Controller
     {
         $rent = RentApartment::query();
 
-        if ($request->has('owner')) {
-            $rent =  User::find($request['owner'])->rentedApartment;
+        if ($request->has('owner') && $request->has('status')) {
+            $rent =  User::find($request['owner'])->rentedApartment->where('status', $request['status']);
 
             if ($rent->isNotEmpty()) {
-               /*  return response([
-                    'data' => $rent
-                ], 200); */
                 return RentApartmentResources::collection($rent);
             } else {
 
@@ -40,19 +37,11 @@ class RentApartmentController extends Controller
             $rent = $rent->get()->where('user_id', $request['user'])->where('status', $request['status']);
             if ($rent->isNotEmpty()) {
                 if ($rent->count() === 1) {
-                    /* return response([
-                        'data' => [$rent->first()]
-                    ], 200); */
+
                 return RentApartmentResources::collection($rent);
 
                 } else {
 
-                    /* $response=[
-                        'data'=>$rent,
-                        'error'=>''
-                    ];
-        
-                    return response($response,200); */
                 return RentApartmentResources::collection($rent);
 
                 }
@@ -61,28 +50,7 @@ class RentApartmentController extends Controller
                 return (response()->json(['errors' => 'This User Does not have any request'], 404));
             }
         }
-        /* if($request->has('status'))
-        {
-            $rent = $rent->get()->where('status',$request['status']);
-            if($rent->isNotEmpty())
-            {
-                if($rent->count() === 1)
-                {
-                    return response([
-                        'data' => [$rent->first()]
-                    ], 200);
-                }
-                return response([
-                    'data' => $rent
-                ], 200);
-            }
-            else
-            {
-                
-                return(response()->json(['errors' => 'This User Does not have any request'], 404));
 
-            }
-        } */
 
         $rent = $rent->get();
 
@@ -91,15 +59,11 @@ class RentApartmentController extends Controller
                 'data' => $rent
             ], 200);
         } else {
-            /* $rent = RentApartment::all();
-            return response([
-                'data' => $rent
-            ], 200); */
+
             return RentApartmentResources::collection($rent);
 
         }
 
-        //return RentApartmentResources::collection($rent);
     }
 
 

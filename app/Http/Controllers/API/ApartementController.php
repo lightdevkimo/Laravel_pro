@@ -24,10 +24,51 @@ class ApartementController extends Controller
      */
     public function index()
     {
-        $apartement =Apartement::all();
+        $apartement =Apartement::orderBy('approved','ASC')->get();
         return ApartementResource::collection($apartement);
     }
 
+    public function requested_apart(Request $request)
+    {
+        if ($request->has('owner_id')){
+
+            $apartement =Apartement::all()->where('approved',0)->where('owner_id',$request['owner_id']);
+
+
+            if ($apartement->isNotEmpty()) {
+                return ApartementResource::collection($apartement);
+            } else {
+
+                return (response()->json(['errors' => 'You Donot Have Any Requests'], 404));
+            }
+        }
+        else
+        {
+            return (response()->json(['errors' => 'Missing Owner ID'], 404));
+
+        }
+
+
+    }
+
+    public function approved_apart(Request $request)
+    {
+        if ($request->has('owner_id')) {
+
+            $apartement = Apartement::all()->where('approved', 1)->where('owner_id', $request['owner_id']);
+
+            if ($apartement->isNotEmpty()) {
+                return ApartementResource::collection($apartement);
+            } else {
+
+                return (response()->json(['errors' => 'You Donot Have Any Approved Apartements yet'], 404));
+            }
+        }
+        else
+        {
+            return (response()->json(['errors' => 'Missing Owner ID'], 404));
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -94,6 +135,7 @@ class ApartementController extends Controller
     {
 
         $apartement = Apartement::query();
+        $apartement = $apartement->where('approved',1);
 
         if ($request->has('gender')) {
 
