@@ -66,10 +66,13 @@ class UserController extends Controller
         $request->validated();
 
         $user = User::find($id);
+
+        /*
         $user->name = $request['name'];
         $user->email = $request['email'];
-        $user->role = $request['role'];
         $user->gender = $request['gender'];
+        */
+        $user->role = $request['role'];
         $user->update();
         $response=[
             'message'=>'Data Update Successfully',

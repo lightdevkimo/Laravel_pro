@@ -15,9 +15,15 @@ class RentApartmentSeeder extends Seeder
     public function run()
     {
         DB::table('rented_apartments')->insert([
-            'user_id' => 1,
+            'user_id' => 3,
             'apartment_id' => 1,
-            'comments' => '',
+            'comments' => 'Good Apartement',
+            'status' => 'requested'
+        ]);
+        DB::table('rented_apartments')->insert([
+            'user_id' => 4,
+            'apartment_id' => 2,
+            'comments' => 'Bad Apartement',
             'status' => 'requested'
         ]);
     }

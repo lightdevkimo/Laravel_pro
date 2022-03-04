@@ -11,17 +11,15 @@ use App\Http\Controllers\API\CityController;
 //List One city By ID
 Route::get('/city/{id}', [CityController::class, 'show']);
 
-Route::post('/cities', [CityController::class, 'store']);
 
 ///Private Routes Of cities
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum','admin_auth']], function () {
 
-    Route::put('/cities/{id}', [CityController::class, 'update']);
+    Route::post('/cities', [CityController::class, 'store']);
     Route::delete('/cities/{id}', [CityController::class, 'destroy']);
 });
 
-//Get City For Search Engine
-//
+
 //Get Gov For Search Engine
 
 Route::get('/findcities/{gov}', [CityController::class, 'findcity']);

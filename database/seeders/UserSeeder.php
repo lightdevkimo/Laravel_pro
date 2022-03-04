@@ -16,28 +16,33 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name'=> Str::random(5),
-            'email'=> Str::random(5).'@mail.com',
+            'name'=>'Super Admin',
+            'email'=> 'admin@sakn.com',
             'gender'=> 'male',
-            'password'=> Hash::make('12345678')
+            'role'=>'0',
+            'password'=> bcrypt('admin@123')
         ]);
         DB::table('users')->insert([
-            'name'=> Str::random(5),
-            'email'=> Str::random(5).'@mail.com',
+            'name'=> 'Owner',
+            'email'=> 'owner@sakn.com',
             'gender'=> 'male',
-            'password'=> Hash::make('12345678')
+            'role'=>'2',
+            'password'=> bcrypt('owner@123')
         ]);
         DB::table('users')->insert([
-            'name'=> Str::random(5),
-            'email'=> Str::random(5).'@mail.com',
-            'gender'=> 'female',
-            'password'=> Hash::make('12345678')
+            'name'=> 'User2',
+            'email'=> 'user1@sakn.com',
+            'gender'=> 'male',
+            'role'=>'1',
+            'password'=> bcrypt('user@123')
         ]);
         DB::table('users')->insert([
-            'name'=> Str::random(5),
-            'email'=> Str::random(5).'@mail.com',
+            'name'=> 'User2',
+            'email'=> 'user2@sakn.com',
             'gender'=> 'female',
-            'password'=> Hash::make('12345678')
+            'role'=>'1',
+            'password'=> bcrypt('user@123')
         ]);
+
     }
 }
