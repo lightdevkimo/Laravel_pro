@@ -28,7 +28,7 @@ class ApartementSeeder extends Seeder
             'available' => 2,
             'max' => 2,
             'nearby' => '',
-            'owner_id' => 1,
+            'owner_id' => 2,
             'city_id' => 1,
         ]);
         DB::table('apartments')->insert([
@@ -43,8 +43,8 @@ class ApartementSeeder extends Seeder
             'available' => 1,
             'max' => 1,
             'nearby' => '',
-            'owner_id' => 1,
-            'city_id' => 1,
+            'owner_id' => 2,
+            'city_id' => 2,
         ]);
     }
 }

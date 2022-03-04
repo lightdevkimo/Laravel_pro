@@ -18,5 +18,9 @@ class CitySeeder extends Seeder
             'name'=> 'cairo',
             'governorate' => 'Cairo'
         ]);
+        DB::table('cities')->insert([
+            'name'=> 'Sidi Gaber',
+            'governorate' => 'Alex'
+        ]);
     }
 }

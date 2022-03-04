@@ -117,8 +117,9 @@ class ApartementController extends Controller
      */
     public function show($id)
     {
+
         $apartement = Apartement::find($id);
-        if($apartement){
+        if($apartement && $apartement['approved']<2){
             return new ApartementResource($apartement);
         }
         else
@@ -201,11 +202,26 @@ class ApartementController extends Controller
     public function approve($id){
 
         $apartement = Apartement::find($id);
-
-        $apartement->update(['approved','1']);
+        $apartement['approved']=1;
+        $apartement->save();
 
         $response=[
             'message'=>'Apartement Approved Successfully',
+            'error'=>''
+        ];
+
+        return response($response,200);
+
+    }
+
+    public function reject($id){
+
+        $apartement = Apartement::find($id);
+        $apartement['approved']=2;
+        $apartement->save();
+
+        $response=[
+            'message'=>'Apartement Rejected Successfully',
             'error'=>''
         ];
 
