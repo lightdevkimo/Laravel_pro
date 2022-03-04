@@ -12,16 +12,21 @@ use App\Http\Controllers\API\ApartementController;
 //Global search
 
 //Takes gender or max price or min price
+//Find
 Route::get('/apartement/search',[ApartementController::class,'search']);
 
-//List All One Apartement
-Route::get('/apartements/{id}',[ApartementController::class,'show']);
+//List  One Apartement (Details)
 
+Route::get('/apartements/{id}',[ApartementController::class,'show']);
 
 
 ///Private Routes Of Apartements
 Route::group(['middleware'=>['auth:sanctum','vender_auth']], function () {
-    Route::get('/apartements',[ApartementController::class,'index']);
+
+    Route::get('/apartement/requested/',[ApartementController::class,'requested_apart']);
+    Route::get('/apartement/approved/',[ApartementController::class,'approved_apart']);
+
+
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
     Route::post('/apartements',[ApartementController::class,'store']);
     Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
@@ -30,6 +35,8 @@ Route::group(['middleware'=>['auth:sanctum','vender_auth']], function () {
 
 ///Admin Routes Only
 Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
+    //list all in admin apanel
+    Route::get('/apartements',[ApartementController::class,'index']);
 
     Route::put('/apartements/approve/{id}',[ApartementController::class,'approve']);
 
@@ -38,3 +45,4 @@ Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
 //List The City Of Apartement
 
 Route::get('/apartement/city/{id}',[ApartementController::class,'ApartementOfCity']);
+

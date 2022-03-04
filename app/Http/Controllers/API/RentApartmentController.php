@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RentedApartments\StoreRentApartmentRequest;
 use App\Http\Requests\RentedApartments\UpdateRentApartmentRequest;
-use App\Http\Resources\RentApartment as RentApartmentResources;
+use App\Http\Resources\RentApartmentResources;
 use App\Models\Apartement;
 use App\Models\RentApartment;
 use App\Models\User;
@@ -22,58 +22,48 @@ class RentApartmentController extends Controller
     {
         $rent = RentApartment::query();
 
-        if($request->has('owner'))
-        {
-            $rent =  User::find($request['owner'])->rentedApartment;
+        if ($request->has('owner') && $request->has('status')) {
+            $rent =  User::find($request['owner'])->rentedApartment->where('status', $request['status']);
 
-            if($rent->isNotEmpty())
-            {
-                return response([
-                    'data' => $rent
-                ], 200);
-            }
-            else
-            {
-                return response([
-                    'error' => 'this owner does not have any rented apartments'
-                ], 404);
+            if ($rent->isNotEmpty()) {
+                return RentApartmentResources::collection($rent);
+            } else {
+
+                return (response()->json(['errors' => 'this owner does not have any rented apartments'], 404));
             }
         }
 
-        if($request->has('user'))
-        {
-            $rent = $rent->get()->where('user_id',$request['user']);
-            if($rent->isNotEmpty())
-            {
-                return response([
-                    'data' => $rent
-                ], 200);
-            }
-            else
-            {
-                return response([
-                    'error' => 'This User Does not have any request'
-                ], 404);
+        if ($request->has('user') && $request->has('status')) {
+            $rent = $rent->get()->where('user_id', $request['user'])->where('status', $request['status']);
+            if ($rent->isNotEmpty()) {
+                if ($rent->count() === 1) {
+
+                return RentApartmentResources::collection($rent);
+
+                } else {
+
+                return RentApartmentResources::collection($rent);
+
+                }
+            } else {
+
+                return (response()->json(['errors' => 'This User Does not have any request'], 404));
             }
         }
+
 
         $rent = $rent->get();
 
-        if($rent->isNotEmpty())
-        {
+        if ($rent->isNotEmpty()) {
             return response([
                 'data' => $rent
             ], 200);
-        }
-        else
-        {
-            $rent = RentApartment::all();
-            return response([
-                'data' => $rent
-            ], 200);
+        } else {
+
+            return RentApartmentResources::collection($rent);
+
         }
 
-        //return RentApartmentResources::collection($rent);
     }
 
 
@@ -102,9 +92,8 @@ class RentApartmentController extends Controller
 
         if ($user_gender !== $apartment['gender']) {
 
-            return response([
-                'data' => 'your gender is not match with requested apartment'
-            ], 402);
+
+            return (response()->json(['errors' => 'your gender is not match with requested apartment'], 404));
         }
         if ($apartment['available'] < 1) {
             return response([
@@ -116,9 +105,8 @@ class RentApartmentController extends Controller
 
         if ($isExist->where('status', 'requested')->first()) {
 
-            return response([
-                'error' => 'this user already request this apartment'
-            ], 402);
+
+            return (response()->json(['errors' => 'this user already request this apartment'], 404));
         }
 
 
@@ -147,9 +135,8 @@ class RentApartmentController extends Controller
                 'data' => $isExist
             ], 200);
         }
-        return response([
-            'error' => 'this rent not found'
-        ], 404);
+
+        return (response()->json(['errors' => 'this rent not found'], 404));
     }
 
     /**
@@ -171,9 +158,8 @@ class RentApartmentController extends Controller
                 'data' => 'confirming done successfully'
             ], 200);
         }
-        return response([
-            'error' => 'this rent not found'
-        ], 404);
+
+        return (response()->json(['errors' => 'this rent not found'], 404));
     }
 
     /**
@@ -204,16 +190,11 @@ class RentApartmentController extends Controller
                     'data' => 'withdrawing / rejecting the request successfully'
                 ], 200);
             } else {
-                return response([
-                    'error' => 'Can not withdraw / reject confirmed requests'
-                ], 400);
+
+                return (response()->json(['errors' => 'Can not withdraw / reject confirmed requests'], 404));
             }
         }
-        return response([
-            'error' => 'this rent is not found'
-        ], 402);
+
+        return (response()->json(['errors' => 'this rent is not found'], 404));
     }
-
-
-
 }

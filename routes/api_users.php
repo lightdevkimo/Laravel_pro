@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ApartementController;
 Route::get('/apart/{id}', [UserController::class, 'getApartement']);
 Route::get('/owner/{id}', [ApartementController::class, 'getOwner']);
 
+Route::get('/user/{id}', [UserController::class, 'show']);
 
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
@@ -22,7 +23,6 @@ Route::group(['middleware'=>['auth:sanctum','admin_auth']], function () {
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
-    Route::get('/user/{id}', [UserController::class, 'show']);
 
 
 });

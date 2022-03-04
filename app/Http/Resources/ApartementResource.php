@@ -25,7 +25,9 @@ class ApartementResource extends JsonResource
             'images'        =>$this->images,
             'available'     =>$this->available,
             'max'           =>$this->max,
-            'nearby'        =>$this->nearby
+            'nearby'        =>$this->nearby,
+            'owner_id'      =>$this->owner_id,
+            'created_at'    =>$this->created_at
         ];
     }
 }

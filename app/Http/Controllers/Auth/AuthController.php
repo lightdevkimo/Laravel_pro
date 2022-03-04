@@ -107,14 +107,14 @@ class AuthController extends Controller
         $user = User::where('email', $request['email'])->first();
 
         if (!$user || !Hash::check($request['old_password'], $user->password)) {
-            return(response()->json(['errors' => 'Enter Your Right Password'], 401));
+            return(response()->json(['errors' => 'Enter Your Right Password'], 403));
         }
 
         $user->password = bcrypt($request['password']);
         $user->update();
 
         $response = [
-            'data' => $user,
+            'message' => 'Your Password Has Been Changed',
         ];
 
         return response($response, 201);

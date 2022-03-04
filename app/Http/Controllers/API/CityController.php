@@ -14,7 +14,6 @@ class CityController extends Controller
     public function index()
     {
         $city =City::all();
-        //dd($city);
         return CityResource::collection($city);
     }
 
