@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Comments\StoreCommentApartmentRequest;
 use App\Http\Requests\Comments\UpdateCommentApartmentRequest;
+use App\Http\Resources\RentApartmentResources;
 use App\Models\CommentApartment;
 use App\Models\RentApartment;
 use Illuminate\Http\Request;
@@ -31,12 +32,8 @@ class CommentController extends Controller
         $comments= $comments->whereNotNull('comments')->get();
         if ($comments->isNotEmpty()){
 
-            $response=[
-                'data'=>$comments,
-                'error'=>''
-            ];
+            return RentApartmentResources::collection($comments);
 
-            return response($response,200);
         }
         else
         {

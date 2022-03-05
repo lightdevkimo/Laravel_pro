@@ -18,8 +18,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/rent/{id}', [RentApartmentController::class, 'edit']);
 
-    Route::get('/comment', [CommentController::class, 'index']);
+
 
     Route::post('/comment', [CommentController::class, 'store']);
 
 });
+
+Route::get('/comment', [CommentController::class, 'index']);
