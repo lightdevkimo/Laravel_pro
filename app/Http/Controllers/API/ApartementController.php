@@ -98,8 +98,8 @@ class ApartementController extends Controller
 
             $request['link']=$compPic;
 
-
-            $path = $request->file('images')->storeAs('public/images', $compPic);
+            $path = $request->file('images')->move(public_path('/apartments'), $compPic);
+            //$path = $request->file('images')->storeAs('public/images', $compPic);
 
             $request['images']->image = $compPic;
         }
