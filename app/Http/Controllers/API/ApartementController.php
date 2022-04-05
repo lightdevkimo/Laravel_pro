@@ -81,6 +81,32 @@ class ApartementController extends Controller
     {
         $request->validated();
 
+        $files=[];
+        for ($x = 0; $x < intval($request['images']); $x++) {
+            $name = time().rand(1,100).'.'.$request->file('images'.$x)->extension();
+            $request->file('images'.$x)->move(public_path('images'), $name);
+            $files[] = $name;
+        }
+        $file= new Apartement();
+        $request['images'] = implode(',', $files);
+        //dd($request['images']);
+        $file->images=implode(',', $files);
+        $file->gender =$request['gender'];
+        $file->available =$request['available'];
+        $file->max =$request['max'];
+        $file->nearby =$request['nearby'];
+        $file->price = $request['price'];
+        $file->address=$request['address'];
+        $file->description=$request['description'];
+        $file->owner_id=$request['owner_id'];
+        $file->city_id=$request['city_id'];
+        $file->save();
+
+        return(response()->json(['data' => $file], 200));
+
+        /*
+        $request->validated();
+
         if ($request->hasFile('images')) {
             //dd('image');
             $completeFileName = $request->file('images')->getClientOriginalName();
@@ -112,6 +138,7 @@ class ApartementController extends Controller
 
 
         return Apartement::create($request->all());
+        */
     }
 
     /**
