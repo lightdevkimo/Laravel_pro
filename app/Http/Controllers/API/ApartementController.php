@@ -99,11 +99,16 @@ class ApartementController extends Controller
             $request['link']=$compPic;
 
 
-            $path = $request->file('images')->storeAs('public/images', $compPic);
+            //$path = $request->file('images')->storeAs('public/images', $compPic);
+            $path = $request->file('images')->move(public_path('/apartments'), $compPic);
 
             $request['images']->image = $compPic;
         }
 
+        //if ($request->hasFile('images')) {
+            //$newImageName = time().'-'. rand() .$request->file('images')->getClientOriginalName() . '.' . $request->file('images')->getClientOriginalExtension();
+            //$request->images->move(public_path('/apartments'),$newImageName);
+        //}
 
 
         return Apartement::create($request->all());
