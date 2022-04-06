@@ -32,7 +32,7 @@ class ApartementRequest extends FormRequest
             'nearby'=>'required|string',
             'price'=>'required|integer',
             'address'=>'required|string',
-            'description'=>'required|string',
+            'description'=>'required|text',
             'owner_id'=>'required',
             'city_id'=>'required'
         ];
