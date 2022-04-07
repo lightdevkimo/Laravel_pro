@@ -82,12 +82,12 @@ class ApartementController extends Controller
     public function store(ApartementRequest $request)
     {
         $request->validated();
-
         $files=[];
         for ($x = 0; $x < intval($request['images']); $x++) {
             $name = time().rand(1,100).'.'.$request->file('images'.$x)->extension();
             $request->file('images'.$x)->move(public_path('images'), $name);
             $files[] = $name;
+
         }
         $file= new Apartement();
         $request['images'] = implode(',', $files);
