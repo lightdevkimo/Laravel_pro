@@ -16,6 +16,7 @@ class Apartement extends Model
         'description',
         'address',
         'price',
+        'phone',
         'link',
         'gender',
         'images',

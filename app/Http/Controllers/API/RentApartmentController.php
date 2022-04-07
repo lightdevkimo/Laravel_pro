@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 
 class RentApartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $rent = RentApartment::query();
@@ -29,7 +24,7 @@ class RentApartmentController extends Controller
                 return RentApartmentResources::collection($rent);
             } else {
 
-                return (response()->json(['errors' => 'this owner does not have any rented apartments'], 404));
+                return (response()->json(['errors' => 'No Renters Requests'], 404));
             }
         }
 
@@ -67,21 +62,8 @@ class RentApartmentController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreRentApartmentRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreRentApartmentRequest $request)
     {
         $request->validated();
@@ -118,12 +100,7 @@ class RentApartmentController extends Controller
 
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RentApartment  $rentApartment
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(
         // StoreRentApartmentRequest $request,
         $rent_id
@@ -139,12 +116,7 @@ class RentApartmentController extends Controller
         return (response()->json(['errors' => 'this rent not found'], 404));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RentApartment  $rentApartment
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($rent_id)
     {
         $isExist = RentApartment::find($rent_id);
@@ -162,37 +134,26 @@ class RentApartmentController extends Controller
         return (response()->json(['errors' => 'this rent not found'], 404));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRentApartmentRequest  $request
-     * @param  \App\Models\RentApartment  $rentApartment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRentApartmentRequest $request, RentApartment $rentApartment)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RentApartment  $rentApartment
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function destroy(Request $request, $rent_id)
     {
         $isExist = RentApartment::find($rent_id);
         if ($isExist) {
-            if ($isExist['status'] === 'requested') {
+            //if ($isExist['status'] === 'requested') {
+
+                Apartement::where('id','=',$isExist->apartment_id)->increment('available');
                 RentApartment::destroy($rent_id);
                 return response([
                     'data' => 'withdrawing / rejecting the request successfully'
                 ], 200);
+                /*
             } else {
 
                 return (response()->json(['errors' => 'Can not withdraw / reject confirmed requests'], 404));
             }
+                */
         }
 
         return (response()->json(['errors' => 'this rent is not found'], 404));
