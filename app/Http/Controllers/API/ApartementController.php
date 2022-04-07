@@ -15,6 +15,8 @@ use App\Models\Apartement;
 use App\Models\User;
 
 
+use Illuminate\Support\Facades\DB;
+
 class ApartementController extends Controller
 {
     /**
@@ -61,7 +63,7 @@ class ApartementController extends Controller
                 return ApartementResource::collection($apartement);
             } else {
 
-                return (response()->json(['errors' => 'You Donot Have Any Approved Apartements yet'], 404));
+                return (response()->json(['errors' => 'NO Approved Requests'], 404));
             }
         }
         else
@@ -96,6 +98,7 @@ class ApartementController extends Controller
         $file->max =$request['max'];
         $file->nearby =$request['nearby'];
         $file->price = $request['price'];
+        $file->phone = $request['phone'];
         $file->address=$request['address'];
         $file->description=$request['description'];
         $file->owner_id=$request['owner_id'];
@@ -104,41 +107,7 @@ class ApartementController extends Controller
 
         return(response()->json(['data' => $file], 200));
 
-        /*
-        $request->validated();
 
-        if ($request->hasFile('images')) {
-            //dd('image');
-            $completeFileName = $request->file('images')->getClientOriginalName();
-            //dd($completeFileName);
-
-            $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
-            //dd($fileNameOnly);
-
-            $extenshion = $request->file('images')->getClientOriginalExtension();
-            //dd($extenshion);
-
-            $compPic = str_replace('', '_', $fileNameOnly . '-' . rand() . '_' . time() . '.' . $extenshion);
-            //dd($compPic);
-
-
-            $request['link']=$compPic;
-
-
-            //$path = $request->file('images')->storeAs('public/images', $compPic);
-            $path = $request->file('images')->move(public_path('/apartments'), $compPic);
-
-            $request['images']->image = $compPic;
-        }
-
-        //if ($request->hasFile('images')) {
-            //$newImageName = time().'-'. rand() .$request->file('images')->getClientOriginalName() . '.' . $request->file('images')->getClientOriginalExtension();
-            //$request->images->move(public_path('/apartments'),$newImageName);
-        //}
-
-
-        return Apartement::create($request->all());
-        */
     }
 
     /**
@@ -288,6 +257,22 @@ class ApartementController extends Controller
         $apartements = City::find($id)->apartments;
         return $apartements;
     }
+
+    public function renters(Request $request)
+    {
+        $apart = DB::table('rented_apartments')
+            ->join('apartments','rented_apartments.apartment_id','=','apartments.id')
+            ->join('users','rented_apartments.user_id','=','users.id');
+
+        if ($request->has('apartment_id')) {
+             return $apart->where('apartments.id', '=', $request['apartment_id'])->where('rented_apartments.status','confirmed')->get([
+                'users.name',
+                'rented_apartments.id',
+            ])->toArray();
+
+        }
+    }
+
 
 
 }
