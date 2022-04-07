@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'password'=> bcrypt('owner@123')
         ]);
         DB::table('users')->insert([
-            'name'=> 'User2',
+            'name'=> 'User1',
             'email'=> 'user1@sakn.com',
             'gender'=> 'male',
             'role'=>'1',

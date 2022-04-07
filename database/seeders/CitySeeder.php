@@ -15,12 +15,16 @@ class CitySeeder extends Seeder
     public function run()
     {
         DB::table('cities')->insert([
-            'name'=> 'cairo',
+            'name'=> 'Smart',
             'governorate' => 'Cairo'
         ]);
         DB::table('cities')->insert([
             'name'=> 'Sidi Gaber',
             'governorate' => 'Alex'
+        ]);
+        DB::table('cities')->insert([
+            'name'=> 'Luxor',
+            'governorate' => 'Luxor'
         ]);
     }
 }

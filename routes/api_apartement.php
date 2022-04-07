@@ -19,15 +19,20 @@ Route::get('/apartement/search',[ApartementController::class,'search']);
 
 Route::get('/apartements/{id}',[ApartementController::class,'show']);
 
+Route::post('/apartements',[ApartementController::class,'store']);
+
+
+
 
 ///Private Routes Of Apartements
 Route::group(['middleware'=>['auth:sanctum','vender_auth']], function () {
 
     Route::get('/apartement/requested/',[ApartementController::class,'requested_apart']);
-    Route::get('/apartement/approved/',[ApartementController::class,'approved_apart']);
     Route::put('/apartements/{id}',[ApartementController::class,'update']);
-    Route::post('/apartements',[ApartementController::class,'store']);
     Route::delete('/apartements/{id}',[ApartementController::class,'destroy']);
+    Route::get('/apartement/renters/',[ApartementController::class,'renters']);
+    Route::get('/apartement/approved/',[ApartementController::class,'approved_apart']);
+
 
 });
 

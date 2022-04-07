@@ -15,10 +15,10 @@ class CreateApartmentsTable extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->longText('description');
             $table->boolean('approved')->default(0);
             $table->string('address');
-            //$table->string('phone');
+            $table->text('phone');
             $table->integer('price');
             $table->string('link')->nullable();
             $table->enum('gender',['male', 'female']);

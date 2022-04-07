@@ -31,8 +31,9 @@ class ApartementRequest extends FormRequest
             'available'=>'required|integer',
             'nearby'=>'required|string',
             'price'=>'required|integer',
+            'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'address'=>'required|string',
-            'description'=>'required|string',
+            'description'=>'required',
             'owner_id'=>'required',
             'city_id'=>'required'
         ];

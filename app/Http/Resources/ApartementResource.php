@@ -20,6 +20,7 @@ class ApartementResource extends JsonResource
             'description'   =>$this->description,
             'address'       =>$this->address,
             'price'         =>$this->price,
+            'phone'         =>$this->phone,
             'link'          =>$this->link,
             'gender'        =>$this->gender,
             'images'        =>$this->images,
